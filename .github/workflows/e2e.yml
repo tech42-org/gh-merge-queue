@@ -1,10 +1,6 @@
 name: E2E
 
-# End-to-end checks against the built container, run only in the merge queue.
-# The workflow also triggers on pull_request so the required `e2e` check
-# reports on PRs (as skipped, which counts as passing) and they can be queued.
 on:
-  pull_request:
   merge_group:
 
 env:
@@ -14,7 +10,6 @@ env:
 jobs:
   e2e:
     name: e2e
-    if: github.event_name == 'merge_group'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
