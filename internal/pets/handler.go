@@ -3,6 +3,7 @@ package pets
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -29,7 +30,7 @@ func (h *Handler) Register(mux *http.ServeMux) {
 }
 
 func (h *Handler) list(w http.ResponseWriter, r *http.Request) {
-	pets := h.store.List()
+	pets := h.store.All()
 	writeJSON(w, http.StatusOK, pets)
 }
 
@@ -83,9 +84,14 @@ func (h *Handler) delete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+const maxNameLen = 50
+
 func validate(p Pet) error {
 	if strings.TrimSpace(p.Name) == "" {
 		return errors.New("name is required")
+	}
+	if len(p.Name) > maxNameLen {
+		return fmt.Errorf("name must be at most %d characters", maxNameLen)
 	}
 	switch p.Species {
 	case "dog", "cat", "bird", "fish":

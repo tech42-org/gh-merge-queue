@@ -9,12 +9,19 @@ import (
 	"github.com/tech42-org/gh-merge-queue/internal/pets"
 )
 
+// version is overridden at build time via -ldflags "-X main.version=...".
+var version = "dev"
+
 func main() {
 	store := pets.NewStore()
 	handler := pets.NewHandler(store)
 
 	mux := http.NewServeMux()
 	handler.Register(mux)
+	mux.HandleFunc("GET /version", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"version":"` + version + `"}`))
+	})
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte("ok"))

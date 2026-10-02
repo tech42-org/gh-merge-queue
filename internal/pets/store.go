@@ -21,8 +21,8 @@ func NewStore() *Store {
 	return &Store{nextID: 1, pets: make(map[int64]Pet)}
 }
 
-// List returns all pets ordered by ID.
-func (s *Store) List() []Pet {
+// All returns all pets ordered by ID.
+func (s *Store) All() []Pet {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
