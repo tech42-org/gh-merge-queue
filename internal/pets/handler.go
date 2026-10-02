@@ -91,6 +91,11 @@ func validate(p Pet) error {
 	}
 	if len(p.Name) > maxNameLen {
 		return fmt.Errorf("name must be at most %d characters", maxNameLen)
+  }
+	switch p.Species {
+	case "dog", "cat", "bird", "fish":
+	default:
+		return errors.New("species must be one of: dog, cat, bird, fish")
 	}
 	return nil
 }
