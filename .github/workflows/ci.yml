@@ -1,14 +1,16 @@
 name: CI
 
+# Fast checks for every PR. The workflow also triggers on merge_group so the
+# required `lint` and `test` checks report there too (as skipped, which counts
+# as passing); otherwise the merge queue would wait on them forever.
 on:
   pull_request:
   merge_group:
-  push:
-    branches: [main]
 
 jobs:
-  test:
-    name: test
+  lint:
+    name: lint
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,8 +25,19 @@ jobs:
       - name: vet
         run: go vet ./...
 
+  test:
+    name: test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
       - name: build
         run: go build ./...
 
-      - name: test
+      - name: unit tests
         run: go test -race ./...
