@@ -87,6 +87,11 @@ func validate(p Pet) error {
 	if strings.TrimSpace(p.Name) == "" {
 		return errors.New("name is required")
 	}
+	switch p.Species {
+	case "dog", "cat", "bird", "fish":
+	default:
+		return errors.New("species must be one of: dog, cat, bird, fish")
+	}
 	return nil
 }
 
