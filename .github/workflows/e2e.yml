@@ -1,6 +1,7 @@
 name: E2E
 
 on:
+  pull_request:
   merge_group:
 
 env:
@@ -10,6 +11,8 @@ env:
 jobs:
   e2e:
     name: e2e
+    # Only runs in the queue; on PRs it reports as skipped so the required check passes.
+    if: github.event_name == 'merge_group'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
