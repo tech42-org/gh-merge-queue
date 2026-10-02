@@ -3,6 +3,7 @@ package pets
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -82,9 +83,14 @@ func (h *Handler) delete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+const maxNameLen = 50
+
 func validate(p Pet) error {
 	if strings.TrimSpace(p.Name) == "" {
 		return errors.New("name is required")
+	}
+	if len(p.Name) > maxNameLen {
+		return fmt.Errorf("name must be at most %d characters", maxNameLen)
 	}
 	return nil
 }
