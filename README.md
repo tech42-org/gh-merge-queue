@@ -12,11 +12,13 @@ The server listens on `:8080`.
 
 ## Endpoints
 
-- `GET /pets` — list all pets
-- `POST /pets` — create a pet
-- `GET /pets/{id}` — get a pet
-- `PUT /pets/{id}` — replace a pet
-- `DELETE /pets/{id}` — delete a pet
+| Method   | Path         | Description     | Success |
+|----------|--------------|-----------------|---------|
+| `GET`    | `/pets`      | List all pets   | 200     |
+| `POST`   | `/pets`      | Create a pet    | 201     |
+| `GET`    | `/pets/{id}` | Get a pet       | 200     |
+| `PUT`    | `/pets/{id}` | Replace a pet   | 200     |
+| `DELETE` | `/pets/{id}` | Delete a pet    | 204     |
 
 ## Testing
 
