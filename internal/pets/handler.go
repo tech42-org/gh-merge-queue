@@ -26,6 +26,7 @@ func (h *Handler) Register(mux *http.ServeMux) {
 	mux.HandleFunc("GET /pets/{id}", h.get)
 	mux.HandleFunc("PUT /pets/{id}", h.update)
 	mux.HandleFunc("DELETE /pets/{id}", h.delete)
+	mux.HandleFunc("GET /pets/count", h.count)
 }
 
 func (h *Handler) list(w http.ResponseWriter, r *http.Request) {
