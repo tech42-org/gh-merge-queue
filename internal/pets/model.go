@@ -6,4 +6,5 @@ type Pet struct {
 	Name    string `json:"name"`
 	Species string `json:"species"`
 	Owner   string `json:"owner,omitempty"`
+	Age     int    `json:"age"`
 }
