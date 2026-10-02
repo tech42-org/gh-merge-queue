@@ -12,16 +12,13 @@ The server listens on `:8080`.
 
 ## Endpoints
 
-- `GET /pets` — list all pets
-  `curl localhost:8080/pets`
-- `POST /pets` — create a pet
-  `curl -X POST localhost:8080/pets -d '{"name":"Rex","species":"dog"}'`
-- `GET /pets/{id}` — get a pet
-  `curl localhost:8080/pets/1`
-- `PUT /pets/{id}` — replace a pet
-  `curl -X PUT localhost:8080/pets/1 -d '{"name":"Rexy","species":"dog"}'`
-- `DELETE /pets/{id}` — delete a pet
-  `curl -X DELETE localhost:8080/pets/1`
+| Method   | Path         | Description     | Success |
+|----------|--------------|-----------------|---------|
+| `GET`    | `/pets`      | List all pets   | 200     |
+| `POST`   | `/pets`      | Create a pet    | 201     |
+| `GET`    | `/pets/{id}` | Get a pet       | 200     |
+| `PUT`    | `/pets/{id}` | Replace a pet   | 200     |
+| `DELETE` | `/pets/{id}` | Delete a pet    | 204     |
 
 ## Testing
 
