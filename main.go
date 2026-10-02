@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/tech42-org/gh-merge-queue/internal/pets"
@@ -20,6 +21,9 @@ func main() {
 	})
 
 	addr := ":8080"
+	if port := os.Getenv("PORT"); port != "" {
+		addr = ":" + port
+	}
 
 	srv := &http.Server{
 		Addr:              addr,
