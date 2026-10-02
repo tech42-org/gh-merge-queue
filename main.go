@@ -14,6 +14,10 @@ func main() {
 
 	mux := http.NewServeMux()
 	handler.Register(mux)
+	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte("ok"))
+	})
 
 	addr := ":8080"
 
