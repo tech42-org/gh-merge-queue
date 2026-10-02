@@ -1,0 +1,35 @@
+name: E2E
+
+on:
+  pull_request:
+  merge_group:
+
+env:
+  # Simulated extra suite time, to make queue behaviour easy to watch.
+  E2E_SOAK_SECONDS: 60
+
+jobs:
+  e2e:
+    name: e2e
+    # Only runs in the queue; on PRs it reports as skipped so the required check passes.
+    if: github.event_name == 'merge_group'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: build image
+        run: docker build -t pets:e2e .
+
+      - name: start container
+        run: docker run -d --name pets -p 8080:8080 pets:e2e
+
+      - name: smoke tests
+        run: ./e2e/smoke.sh http://localhost:8080
+
+      - name: simulate slow e2e suite
+        run: sleep "$E2E_SOAK_SECONDS"
+
+      - name: container logs
+        if: always()
+        run: docker logs pets || true
