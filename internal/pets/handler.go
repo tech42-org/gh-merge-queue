@@ -28,7 +28,7 @@ func (h *Handler) Register(mux *http.ServeMux) {
 }
 
 func (h *Handler) list(w http.ResponseWriter, r *http.Request) {
-	pets := h.store.List()
+	pets := h.store.All()
 	writeJSON(w, http.StatusOK, pets)
 }
 
