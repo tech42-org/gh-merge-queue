@@ -59,8 +59,9 @@ func TestCreateValidation(t *testing.T) {
 		body string
 		want int
 	}{
-		"malformed json": {`{`, http.StatusBadRequest},
-		"missing name":   {`{"species":"cat"}`, http.StatusUnprocessableEntity},
+		"malformed json":  {`{`, http.StatusBadRequest},
+		"missing name":    {`{"species":"cat"}`, http.StatusUnprocessableEntity},
+		"unknown species": {`{"name":"Nemo","species":"dragon"}`, http.StatusUnprocessableEntity},
 	}
 	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
